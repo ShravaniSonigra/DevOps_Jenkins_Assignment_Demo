@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevOps Hub | Jenkins + GitHub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="#" class="brand">
+      <span class="brand-icon">D</span>
+      DevOps Hub
+    </a>
+    <span class="nav-label">CI/CD DEMO</span>
+  </nav>
+
+  <main class="container">
+    <section class="hero">
+      <div class="tag">
+        <span class="pulse"></span>
+        DEVELOPER WORKSPACE
+      </div>
+
+      <h1>Build smarter.<br><span>Deploy faster.</span></h1>
+
+      <p class="hero-text">
+        A simple demonstration of modern development workflows
+        powered by GitHub, Jenkins, and automation.
+      </p>
+
+      <div class="hero-actions">
+        <button class="primary-btn" onclick="checkStatus()">
+          Check App Status <span>→</span>
+        </button>
+        <a class="secondary-btn" href="#workflow">Explore workflow ↓</a>
+      </div>
+
+      <div id="status" class="status-message" role="status"
+           aria-live="polite">
+        Application status has not been checked yet.
+      </div>
+    </section>
+
+    <section class="section" id="workflow">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">THE TOOLKIT</p>
+          <h2>Your DevOps essentials</h2>
+        </div>
+        <span class="live-badge">● Demo project</span>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <div class="card-icon github-icon">⌘</div>
+          <h3>GitHub</h3>
+          <p>Store source code, track changes, and collaborate with your team.</p>
+          <span class="card-footer">01 / VERSION CONTROL</span>
+        </article>
+
+        <article class="card featured">
+          <div class="card-icon jenkins-icon">⚙</div>
+          <h3>Jenkins</h3>
+          <p>Automate source-code checkout and run your configured build steps.</p>
+          <span class="card-footer">02 / AUTOMATION</span>
+        </article>
+
+        <article class="card">
+          <div class="card-icon deploy-icon">↗</div>
+          <h3>CI/CD</h3>
+          <p>Create a repeatable workflow for building, testing, and delivery.</p>
+          <span class="card-footer">03 / DELIVERY</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="workflow-panel">
+      <div>
+        <p class="eyebrow">HOW IT WORKS</p>
+        <h2>From code to build</h2>
+        <p class="panel-text">
+          Follow the journey of your source code through a basic CI workflow.
+        </p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <span class="step-number">01</span>
+          <strong>Write Code</strong>
+          <small>Create your project</small>
+        </div>
+        <span class="arrow">→</span>
+        <div class="step">
+          <span class="step-number">02</span>
+          <strong>Push to GitHub</strong>
+          <small>Save your changes</small>
+        </div>
+        <span class="arrow">→</span>
+        <div class="step">
+          <span class="step-number">03</span>
+          <strong>Build with Jenkins</strong>
+          <small>Run your job</small>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>DevOps Hub <span class="dot">●</span> Student Project</span>
+      <span>Built for learning CI/CD</span>
+    </footer>
+  </main>
+
+  <script>
+    async function checkStatus() {
+      const statusBox = document.getElementById("status");
+      statusBox.className = "status-message";
+      statusBox.textContent = "Checking application status...";
+
+      try {
+        const response = await fetch("/api/status");
+        if (!response.ok) throw new Error("Server error");
+
+        const data = await response.json();
+        statusBox.className = "status-message success";
+        statusBox.textContent = "✓ " + data.message;
+      } catch (error) {
+        statusBox.className = "status-message error";
+        statusBox.textContent =
+          "Unable to connect. Please check whether the server is running.";
+      }
+    }
+  </script>
+</body>
+</html>
